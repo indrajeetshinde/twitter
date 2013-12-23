@@ -1,0 +1,49 @@
+<% if current_user %>
+<div id="createRibbit" class="panel right">
+    <h1>Create a Tweet</h1>
+    <p>
+    <%= form_for @tweet do |f| %>
+        <%= f.text_area :content, class: 'ribbitText',:rows => 8 %>
+        <%= f.submit "Tweet!" %>
+    <% end %>
+    </p>
+</div>
+<% end %>
+<div id="ribbits" class="panel left">
+    <h1>Your Profile</h1>
+    <div class="ribbitWrapper">
+       
+        <span class="name"><%= @user.user_name %></span> 
+        <p>
+        
+        <%= @user.tweets.size %> Tweets
+        <span class="spacing"><%= @user.followers.count %> Followers</span>
+        <span class="spacing"><%= @user.followeds.count %> Following</span>
+        
+        <% if current_user and @user != current_user %>
+	    <% if current_user.following? @user %>
+		<%= form_tag relationship_path(@relationship), method: :delete do %>
+		    <%= submit_tag "Unfollow" %>
+		<% end %>
+	    <% else %>
+		<%= form_for @relationship do %>
+		    <%= hidden_field_tag :followed_id, @user.id %>
+		    <%= submit_tag "Follow" %>
+		<% end %>
+	    <% end %>
+        <% end %>
+
+        </p>
+    </div>
+</div>
+<div class="panel left">
+    <h1>Your Tweets</h1>
+    <% @user.tweets.each do |tweet| %>
+        <div class="ribbitWrapper">
+            
+            <span class="name"><%= @user.user_name %></span>
+            <span class="time"><%= time_ago_in_words(tweet.created_at) %></span>
+            <p> <%= tweet.content %> </p>
+        </div>
+    <% end %>
+</div
