@@ -12,7 +12,7 @@
     <header>
         <div class="wrapper">
             <img src="/assets/logo.png">
-            <span>Twitter Clone</span>
+            <span>Twitter </span>
             <% if current_user %>
 		<%= link_to "Public Tweets", tweets_path %>
                 <%= link_to "Buddies' Tweets", buddies_path %>
